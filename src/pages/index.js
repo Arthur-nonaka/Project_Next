@@ -7,7 +7,7 @@ function HomePage() {
 
   return (
     <div className="main">
-        <EventList items={featuredEvents}/>
+      <EventList items={featuredEvents} />
     </div>
   );
 }
