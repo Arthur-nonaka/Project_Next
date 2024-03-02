@@ -8,7 +8,7 @@ import Button from "../ui/Button";
 function EventItem(props) {
   const { id, image, title, date, location } = props;
 
-  const exploreLink = `/event/${id}`;
+  const exploreLink = `/events/${id}`;
   const formattedAddress = location.replace(", ", "\n");
   const formattedDate = new Date(date).toLocaleDateString("pt-BR", {
     day: "numeric",
