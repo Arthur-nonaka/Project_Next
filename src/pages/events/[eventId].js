@@ -37,12 +37,13 @@ export async function getStaticProps(context) {
         .map((key) => data[key])[0];
       return filteredData;
     });
-  const notFound = data ? false: true;
+  const notFound = data ? false : true;
   return {
     props: {
       event: data,
     },
-    notFound
+    revalidate: 30,
+    notFound,
   };
 }
 

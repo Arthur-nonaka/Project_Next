@@ -32,12 +32,7 @@ export async function getStaticProps(context) {
       for (const key in data) {
         array.push({
           id: key,
-          title: data[key].title,
-          location: data[key].location,
-          description: data[key].description,
-          date: data[key].date,
-          image: data[key].image,
-          isFeatured: data[key].isFeatured,
+          ...data[key],
         });
       }
       return array;
@@ -47,6 +42,7 @@ export async function getStaticProps(context) {
     props: {
       events: data,
     },
+    revalidate: 1800
   };
 }
 

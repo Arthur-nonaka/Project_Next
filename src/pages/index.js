@@ -25,12 +25,7 @@ export async function getStaticProps(context) {
         if (json[key].isFeatured) {
           transformedData.push({
             id: key,
-            title: json[key].title,
-            location: json[key].location,
-            description: json[key].description,
-            date: json[key].date,
-            image: json[key].image,
-            isFeatured: json[key].isFeatured,
+            ...json[key]
           });
         }
       }
@@ -41,6 +36,7 @@ export async function getStaticProps(context) {
     props: {
       featuredEvents: data,
     },
+    revalidate: 1800
   };
 }
 
