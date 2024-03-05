@@ -1,25 +1,53 @@
 import { useRouter } from "next/router";
 
-import { getAllEvents } from "../../../dummy-data";
+// import { getAllEvents } from "../../../dummy-data";
 import EventList from "@/components/events/EventList";
 import EventsSearch from "@/components/events/events-search";
 
-function AllEventsPage() {
-  const events = getAllEvents();
+function AllEventsPage(props) {
+  const { events } = props;
   const router = useRouter();
 
   const findEventsHandler = (year, month) => {
     const fullPath = `/events/${year}/${month}`;
 
     router.push(fullPath);
-  }
+  };
 
   return (
     <div>
-      <EventsSearch onSearch={findEventsHandler}/>
+      <EventsSearch onSearch={findEventsHandler} />
       <EventList items={events} />
     </div>
   );
+}
+
+export async function getStaticProps(context) {
+  const data = await fetch(
+    "https://nextjs-course-2caa2-default-rtdb.firebaseio.com/events.json"
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      const array = [];
+      for (const key in data) {
+        array.push({
+          id: key,
+          title: data[key].title,
+          location: data[key].location,
+          description: data[key].description,
+          date: data[key].date,
+          image: data[key].image,
+          isFeatured: data[key].isFeatured,
+        });
+      }
+      return array;
+    });
+
+  return {
+    props: {
+      events: data,
+    },
+  };
 }
 
 export default AllEventsPage;
